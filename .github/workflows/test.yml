@@ -1,0 +1,54 @@
+name: Breezenote Test
+
+on:
+  push:
+    branches: [ "dev" ]
+
+permissions:
+  contents: read
+
+jobs:
+  run-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '^1.23.2'
+
+      - name: setup tmp dir
+        run: mkdir -p tmp
+
+      - name: get secrets
+        uses: actions/checkout@v3
+        with:
+          repository: hrabit64/springnote-breezenote-secret
+          ref: main
+          path: "./tmp"
+          token: ${{ secrets.TOKEN }}
+
+      - name: move secrets
+        run: mv ./tmp/* .
+
+      - name: remove tmp dir
+        run: rm -rf tmp
+
+      - name: run tests
+        run: chmod +x ./bin/run_tests.sh && ./bin/run_tests.sh
+        continue-on-error: true
+        id: test
+
+      - name: Archive build reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-report
+          path: ./coverage.html
+
+      - name: Fail if tests failed
+        if: ${{ steps.test.outcome == 'failure' }}
+        run: exit 1
