@@ -38,7 +38,7 @@ jobs:
         run: rm -rf tmp
 
       - name: run tests
-        run: chmod +x ./bin/run_tests.sh && ./bin/run_tests.sh
+        run: chmod +x ./bin/run_test.sh && ./bin/run_test.sh
         continue-on-error: true
         id: test
 
