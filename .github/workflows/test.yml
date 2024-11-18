@@ -32,7 +32,7 @@ jobs:
           token: ${{ secrets.TOKEN }}
 
       - name: move secrets
-        run: mv ./tmp/* .
+        run: mv ./tmp/* /home/runner/work/springnote-breezenote/springnote-breezenote
 
       - name: remove tmp dir
         run: rm -rf tmp
