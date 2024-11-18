@@ -28,11 +28,11 @@ jobs:
         with:
           repository: hrabit64/springnote-breezenote-secret
           ref: main
-          path: "./tmp"
+          path: "tmp"
           token: ${{ secrets.TOKEN }}
 
       - name: move secrets
-        run: mv ./tmp/* ../
+        run: mv tmp/* ./
 
       - name: show tree
         run: tree
