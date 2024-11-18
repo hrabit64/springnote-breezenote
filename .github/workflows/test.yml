@@ -34,6 +34,9 @@ jobs:
       - name: move secrets
         run: mv ./tmp/* ./
 
+      - name: show tree
+        run: tree
+
       - name: remove tmp dir
         run: rm -rf tmp
 
