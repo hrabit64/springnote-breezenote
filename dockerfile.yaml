@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  breezenote:
+    image: breezenote:latest
+    container_name: breezenote
+    restart: always
+    networks:
+      - springnote_net
+    volumes:
+      - breezenote_data:/app/data
+    labels:
+      logging: "promtail"
+      logging_jobname: "containerlogs"
+
+networks:
+  springnote_net:
+    external: true
+
+volumes:
+  breezenote_data:
+    external: true

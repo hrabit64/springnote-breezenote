@@ -30,3 +30,4 @@ update_secrets.sh
 firebase.json
 
 .idea/
+act.secret

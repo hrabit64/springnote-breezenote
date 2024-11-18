@@ -1,0 +1,74 @@
+name: Breeze Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  run-build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '^1.23.2'
+
+      - name: setup tmp dir
+        run: mkdir -p tmp
+
+      - name: get secrets
+        uses: actions/checkout@v3
+        with:
+          repository: hrabit64/springnote-breezenote-secret
+          ref: main
+          path: "tmp"
+          token: ${{ secrets.TOKEN }}
+
+      - name: move env
+        run: mv tmp/.env.prod .env.prod
+
+      - name: move firebase
+        run: mv tmp/firebase.json firebase.json
+
+      - name: remove tmp dir
+        run: rm -rf tmp
+
+      - name: Build with Go
+        run: go build -o breezenote ./cmd/main.go
+
+      - name: Create Deploy folder
+        run: mkdir -p deploy
+
+      - name: Copy build artifacts
+        run: cp -r breezenote .env.prod Dockerfile docker-compose.yml firebase.json deploy/
+
+      - name: Push File to Server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          port: ${{ secrets.PORT }}
+          source: .
+          target: /home/springnote-deploy-agent/breezenote
+
+      - name: Run Deploy Script
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /home/springnote-deploy-agent/breezenote
+            docker build -t breezenote .
+            docker compose up -d

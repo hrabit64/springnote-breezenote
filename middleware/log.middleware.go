@@ -15,12 +15,13 @@ func ResponseLogger() gin.HandlerFunc {
 
 		latency := time.Since(t)
 
-		fmt.Printf("[%d] %s Content-Type: %s Url :%s In %d\n",
+		fmt.Printf("[%d] %s %s Content-Type: %s  In %d ns IP: %s\n",
 			c.Writer.Status(),
 			c.Request.Method,
+			c.Request.URL.Path,
 			c.Writer.Header().Get("Content-Type"),
-			c.Request.RequestURI,
-			latency,
+			latency.Nanoseconds(),
+			c.ClientIP(),
 		)
 	}
 }

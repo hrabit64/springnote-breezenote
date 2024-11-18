@@ -31,11 +31,9 @@ jobs:
           path: "tmp"
           token: ${{ secrets.TOKEN }}
 
-      - name: move secrets
-        run: mv tmp/* ./
 
-      - name: show tree
-        run: tree
+      - name: move secrets
+        run: mv tmp/.env.test .env.test
 
       - name: remove tmp dir
         run: rm -rf tmp
