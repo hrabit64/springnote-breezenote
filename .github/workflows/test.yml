@@ -32,7 +32,7 @@ jobs:
           token: ${{ secrets.TOKEN }}
 
       - name: move secrets
-        run: mv ./tmp/* ./
+        run: mv ./tmp/* ../
 
       - name: show tree
         run: tree
