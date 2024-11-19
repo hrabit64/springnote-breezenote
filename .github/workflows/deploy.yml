@@ -44,7 +44,7 @@ jobs:
         run: mkdir -p deploy
 
       - name: Copy build artifacts
-        run: cp -r . deploy/
+        run: find . -maxdepth 1 -mindepth 1 ! -name 'deploy' -exec cp -r {} deploy/ \;
 
       - name: Push File to Server
         uses: appleboy/scp-action@master
