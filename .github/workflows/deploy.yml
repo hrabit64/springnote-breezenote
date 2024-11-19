@@ -40,14 +40,11 @@ jobs:
       - name: remove tmp dir
         run: rm -rf tmp
 
-      - name: Build with Go
-        run: go build -o breezenote ./cmd/main.go
-
       - name: Create Deploy folder
         run: mkdir -p deploy
 
       - name: Copy build artifacts
-        run: cp -r breezenote .env.prod Dockerfile docker-compose.yaml firebase.json deploy/
+        run: cp -r . deploy/
 
       - name: Push File to Server
         uses: appleboy/scp-action@master
