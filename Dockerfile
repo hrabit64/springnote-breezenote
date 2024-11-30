@@ -17,15 +17,10 @@ RUN mkdir ./logs
 RUN mkdir ./data
 RUN mkdir ./data/images
 
-RUN if [ "$USE_PROFILE" == "prod" ]; then \
-      cp /build/.env.prod /app/.env \
-      cp /build/firebase.json /app/ \
-      echo "use prod" \
-    elif [ "$USE_PROFILE" == "live" ]; then \
-      cp /build/.env.live /app/.env \
-      cp /build/test-firebase.json /app/ \
-      echo "use live" \
-    fi
+COPY .env.prod .
+COPY firebase.json .
+COPY .env.live .
+COPY test-firebase.json .
 
 EXPOSE 8080
 ENV BREEZENOTE_PROFILE=${USE_PROFILE}
