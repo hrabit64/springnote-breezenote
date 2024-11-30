@@ -25,9 +25,11 @@ go.work.sum
 .env.local
 .env.prod
 .env.test
+.env.live
 
 update_secrets.sh
 firebase.json
+test-firebase.json
 
 .idea/
 act.secret

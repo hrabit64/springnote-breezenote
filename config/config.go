@@ -16,6 +16,7 @@ type Config struct {
 	MaxImageLen         int    `mapstructure:"MAX_IMAGE_LEN"`
 	AllowImageUploadUid string `mapstructure:"ALLOW_IMAGE_UPLOAD_UID"`
 	DBConnURL           string `mapstructure:"DB_CONN_URL"`
+	FireBaseConfig      string `mapstructure:"FIRE_BASE_CONFIG"`
 }
 
 var RootConfig *Config
