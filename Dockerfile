@@ -8,6 +8,8 @@ RUN go build -o /bin/breezenote ./cmd/main.go
 
 RUN chmod +x /bin/breezenote
 
+
+
 WORKDIR /app
 ENV USE_PROFILE prod
 
@@ -15,10 +17,17 @@ RUN mkdir ./logs
 RUN mkdir ./data
 RUN mkdir ./data/images
 
+RUN if [ "$USE_PROFILE" == "prod" ]; then \
+      cp /build/.env.prod /app/.env \
+      cp /build/firebase.json /app/ \
+      echo "use prod" \
+    elif [ "$USE_PROFILE" == "live" ]; then \
+      cp /build/.env.live /app/.env \
+      cp /build/test-firebase.json /app/ \
+      echo "use live" \
+    fi
+
 EXPOSE 8080
 ENV BREEZENOTE_PROFILE=${USE_PROFILE}
 
-COPY run_server.sh /run_server.sh
-RUN chmod +x /run_server.sh
-
-CMD ["/run_server.sh"]
+CMD ["/bin/breezenote"]
