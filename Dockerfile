@@ -17,7 +17,9 @@ RUN mkdir ./data
 RUN mkdir ./data/images
 
 
+ENV USE_PROFILE prod
+
 EXPOSE 8080
-ENV BREEZENOTE_PROFILE="prod"
+ENV BREEZENOTE_PROFILE=${USE_PROFILE}
 
 CMD ["/bin/breezenote"]

@@ -4,10 +4,26 @@ services:
     image: breezenote:latest
     container_name: breezenote
     restart: always
+    environment:
+      - USE_PROFILE=prod
     networks:
       - springnote_net
     volumes:
       - breezenote_data:/app/data
+    labels:
+      logging: "promtail"
+      logging_jobname: "containerlogs"
+
+  breezenote-test:
+    image: breezenote:latest
+    container_name: breezenote-test
+    restart: always
+    environment:
+      - USE_PROFILE=live
+    networks:
+      - springnote_net
+    volumes:
+      - breezenote-test_data:/app/data
     labels:
       logging: "promtail"
       logging_jobname: "containerlogs"
@@ -18,4 +34,6 @@ networks:
 
 volumes:
   breezenote_data:
+    external: true
+  breezenote-test_data:
     external: true
