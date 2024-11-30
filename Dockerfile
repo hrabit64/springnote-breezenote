@@ -9,17 +9,16 @@ RUN go build -o /bin/breezenote ./cmd/main.go
 RUN chmod +x /bin/breezenote
 
 WORKDIR /app
-COPY .env.prod .
-COPY firebase.json .
+ENV USE_PROFILE prod
 
 RUN mkdir ./logs
 RUN mkdir ./data
 RUN mkdir ./data/images
 
-
-ENV USE_PROFILE prod
-
 EXPOSE 8080
 ENV BREEZENOTE_PROFILE=${USE_PROFILE}
 
-CMD ["/bin/breezenote"]
+COPY run_server.sh /run_server.sh
+RUN chmod +x /run_server.sh
+
+CMD ["/run_server.sh"]
