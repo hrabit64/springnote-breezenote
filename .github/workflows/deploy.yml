@@ -37,6 +37,9 @@ jobs:
       - name: move firebase
         run: mv tmp/firebase.json firebase.json
 
+      - name: move test firebase
+        run: mv tmp/test-firebase.json test-firebase.json
+
       - name: remove tmp dir
         run: rm -rf tmp
 
