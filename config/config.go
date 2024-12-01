@@ -17,6 +17,7 @@ type Config struct {
 	AllowImageUploadUid string `mapstructure:"ALLOW_IMAGE_UPLOAD_UID"`
 	DBConnURL           string `mapstructure:"DB_CONN_URL"`
 	FireBaseConfig      string `mapstructure:"FIRE_BASE_CONFIG"`
+	AllowOrigin         string `mapstructure:"ALLOW_ORIGIN"`
 }
 
 var RootConfig *Config
