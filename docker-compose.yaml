@@ -5,7 +5,7 @@ services:
     container_name: breezenote
     restart: always
     environment:
-      - USE_PROFILE=prod
+      - BREEZENOTE_PROFILE=prod
     networks:
       - springnote_net
     volumes:
@@ -19,7 +19,7 @@ services:
     container_name: breezenote-test
     restart: always
     environment:
-      - USE_PROFILE=live
+      - BREEZENOTE_PROFILE=live
     networks:
       - springnote_net
     volumes:
