@@ -1,13 +1,11 @@
 package core
 
 import (
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/hrabit64/springnote-breezenote/config"
 	"github.com/hrabit64/springnote-breezenote/di"
 	"github.com/hrabit64/springnote-breezenote/middleware"
 	"github.com/hrabit64/springnote-breezenote/router"
-	"time"
 )
 
 // SetupRouter gin engine을 설정합니다.
@@ -21,14 +19,7 @@ func SetupRouter() *gin.Engine {
 	r.Use(gin.Recovery())
 	r.Use(gin.Logger())
 	r.Use(middleware.ResponseLogger())
-	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{config.RootConfig.AllowOrigin},
-		AllowMethods:     []string{"PUT", "GET"},
-		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		MaxAge:           12 * time.Hour,
-	}))
+	r.Use(middleware.CORSMiddleware(config.RootConfig.AllowOrigin))
 	//setup auth middleware
 	routers := configRouters()
 
