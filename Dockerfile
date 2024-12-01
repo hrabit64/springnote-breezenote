@@ -11,7 +11,7 @@ RUN chmod +x /bin/breezenote
 
 
 WORKDIR /app
-ENV USE_PROFILE prod
+
 
 RUN mkdir ./logs
 RUN mkdir ./data
@@ -23,6 +23,8 @@ COPY .env.live .
 COPY test-firebase.json .
 
 EXPOSE 8080
-ENV BREEZENOTE_PROFILE=${USE_PROFILE}
+ENV BREEZENOTE_PROFILE="prod"
+ENV BREEZENOTE_ROOT_PATH="/app"
+
 
 CMD ["/bin/breezenote"]

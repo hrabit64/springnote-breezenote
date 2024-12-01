@@ -34,6 +34,9 @@ jobs:
       - name: move env
         run: mv tmp/.env.prod .env.prod
 
+      - name: move test env
+        run: mv tmp/.env.live .env.live
+
       - name: move firebase
         run: mv tmp/firebase.json firebase.json
 
