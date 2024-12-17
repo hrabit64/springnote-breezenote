@@ -61,7 +61,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           port: ${{ secrets.PORT }}
           source: .
-          target: /home/springnote-deploy-agent/breezenote
+          target: /home/springbot/breezenote
 
       - name: Run Deploy Script
         uses: appleboy/ssh-action@master
@@ -72,6 +72,6 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /home/springnote-deploy-agent/breezenote
+            cd /home/springbot/breezenote
             docker build -t breezenote .
             docker compose up -d
