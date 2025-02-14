@@ -59,7 +59,7 @@ func (i *imageController) UploadImage(c *gin.Context) {
 	convName := uuid.New().String()
 
 	if utils.GetFileExt(request.Name) == "gif" {
-		//TODO support resize gif
+
 		err := i.saveGif(request.Image, convName)
 		if err != nil {
 			i.handleError(err, c)
